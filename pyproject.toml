@@ -1,0 +1,17 @@
+[project]
+name = "eks-audit-agent"
+version = "0.1.0"
+description = "MCP server for EKS CloudWatch audit log analysis — diagnose container restarts and crashes"
+requires-python = ">=3.11"
+dependencies = [
+    "mcp>=1.0.0",
+    "boto3>=1.34.0",
+    "python-dateutil>=2.8.0",
+]
+
+[project.scripts]
+eks-audit-agent = "src.server:main"
+
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
