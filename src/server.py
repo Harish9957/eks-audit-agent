@@ -38,7 +38,7 @@ def validate_name(value: str, field: str) -> str:
     return value
 
 
-async def run_insights_query(cluster: str, query: str, hours_back: int = 24, region: str = "us-west-2") -> list[dict]:
+async def run_insights_query(cluster: str, query: str, hours_back: int = 24, region: str = "us-east-1") -> list[dict]:
     """Execute a CloudWatch Logs Insights query and return results."""
     hours_back = min(hours_back, MAX_HOURS_BACK)
 
@@ -130,7 +130,7 @@ async def list_tools() -> list[Tool]:
                 "properties": {
                     "pod_name": {"type": "string", "description": "The pod name"},
                     "cluster": {"type": "string", "description": "EKS cluster name"},
-                    "region": {"type": "string", "description": "AWS region", "default": "us-west-2"},
+                    "region": {"type": "string", "description": "AWS region", "default": "us-east-1"},
                     "hours_back": {"type": "integer", "description": "How many hours back to search", "default": 168},
                 },
                 "required": ["pod_name", "cluster"],
@@ -167,7 +167,7 @@ Segfault: {result['is_segfault']}"""
         elif name == "diagnose_restart":
             pod_name = validate_name(arguments["pod_name"], "pod_name")
             cluster = validate_name(arguments["cluster"], "cluster")
-            region = arguments.get("region", "us-west-2")
+            region = arguments.get("region", "us-east-1")
             hours_back = arguments.get("hours_back", 168)
 
             # Use exact match if input looks like a full pod name (contains hash pattern)
@@ -247,7 +247,7 @@ Segfault: {result['is_segfault']}"""
 
         elif name == "find_crashes":
             cluster = validate_name(arguments["cluster"], "cluster")
-            region = arguments.get("region", "us-west-2")
+            region = arguments.get("region", "us-east-1")
             hours_back = arguments.get("hours_back", 168)
             service_name = arguments.get("service_name")
             exit_code = arguments.get("exit_code")
@@ -286,7 +286,7 @@ Segfault: {result['is_segfault']}"""
         elif name == "get_pod_lifecycle":
             pod_name = validate_name(arguments["pod_name"], "pod_name")
             cluster = validate_name(arguments["cluster"], "cluster")
-            region = arguments.get("region", "us-west-2")
+            region = arguments.get("region", "us-east-1"
             hours_back = arguments.get("hours_back", 168)
 
             exact = bool(re.search(r'-[a-f0-9]{8,10}-[a-z0-9]{5}$', pod_name))
